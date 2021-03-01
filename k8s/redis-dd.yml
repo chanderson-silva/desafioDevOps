@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    app: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      hostname: redis-deploy
+      containers:
+      - name: redis
+        image: redis
+        imagePullPolicy: Never
+        command:
+        - redis-server 
+        - "--requirepass 1nUMbNBIqI8b"
+        ports:
+        - containerPort: 6379
