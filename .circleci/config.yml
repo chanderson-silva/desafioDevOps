@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      IMAGE_NAME: chandaom41k3/images-test
     working_directory: /app
     docker:
       - image: docker:17.05.0-ce-git
@@ -22,9 +24,8 @@ jobs:
       - deploy:
           name: Push application Docker image
           command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              login="$(aws ecr get-login)"
-              ${login}
-              docker tag app "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
-              docker push "${ECR_ENDPOINT}/app:${CIRCLE_SHA1}"
+            if [ "${CIRCLE_BRANCH}" == "main" ]; then
+              echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+              docker tag api $IMAGE_NAME
+              docker push $IMAGE_NAME:latest
             fi
