@@ -48,7 +48,7 @@ jobs:
             #ssh-keyscan -H ${PROJECT_DEPLOY_HOST} >> /root/.ssh/known_hosts
             #chmod 400 /root/.ssh/authorezed.pem
             echo "${authorized}" >> ~/.ssh/id_rsa
-            chmod 700 ~/.ssh
+            chmod 600 ~/.ssh/id_rsa
       - run:
           name: Pull Docker image onto deploy box
           command: |
