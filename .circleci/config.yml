@@ -62,4 +62,11 @@ jobs:
             "kubectl apply -f /k8s/deployment.yml"
             "kubectl apply -f /k8s/redis-dd.yml"
             "kubectl apply -f /k8s/redis-svc.yaml"
-
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build 
