@@ -51,7 +51,7 @@ jobs:
       - run:
           name: Pull Docker image onto deploy box
           command: |
-            ssh ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
+            ssh -o StrictHostKeyChecking=no ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
             docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASS}" 
             docker push $IMAGE_NAME:latest
       - run:
@@ -60,7 +60,7 @@ jobs:
            # This should already be scaled to two instances
            # The 'uniq' suppresses a long stream of ncurses updates
            # (which the CI console doesn't cope with very well)
-            ssh ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
+            ssh -o StrictHostKeyChecking=no ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
             "kubectl apply -f /k8s/api-service.yml"
             "kubectl apply -f /k8s/deployment.yml"
             "kubectl apply -f /k8s/redis-dd.yml"
