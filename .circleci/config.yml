@@ -1,4 +1,5 @@
 version: 2
+
 jobs:
   build:
     environment:
@@ -29,3 +30,36 @@ jobs:
               docker tag api $IMAGE_NAME
               docker push $IMAGE_NAME:latest
             fi
+
+
+  deploy:
+    environment:
+      IMAGE_NAME: chandaom41k3/api
+    working_directory: /app
+    docker:
+      - image: docker:17.05.0-ce-git
+    steps:
+      - add_ssh_keys
+      - setup_remote_docker
+      - run:
+          name: Add the keys to the known hosts
+          command: |
+            echo "${authorized}" >> /root.ssh/authorized.pem        #ssh-keyscan -H ${PROJECT_DEPLOY_HOST} >> /root/.ssh/known_hosts
+      - run:
+          name: Pull Docker image onto deploy box
+          command: |
+           ssh -i "/root/.ssh/authorized.pem" ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
+           docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASS}" 
+           docker push $IMAGE_NAME:latest
+      - run:
+          name: Do a rolling service update
+          command: |
+           # This should already be scaled to two instances
+           # The 'uniq' suppresses a long stream of ncurses updates
+           # (which the CI console doesn't cope with very well)
+            ssh -i "/root/.ssh/authorized.pem" ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
+            "kubectl apply -f /k8s/api-service.yml"
+            "kubectl apply -f /k8s/deployment.yml"
+            "kubectl apply -f /k8s/redis-dd.yml"
+            "kubectl apply -f /k8s/redis-svc.yaml"
+
