@@ -53,7 +53,7 @@ jobs:
       - run:
           name: Pull Docker image onto deploy box
           command: |
-            ssh -o StrictHostKeyChecking=no ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
+            ssh ${PROJECT_DEPLOY_USER}@${PROJECT_DEPLOY_HOST} 
             docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASS}" 
             docker push $IMAGE_NAME:latest
       - run:
