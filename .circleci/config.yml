@@ -77,7 +77,10 @@ jobs:
             cat config/client.crt > ${HOME}/.minikube/profiles/minikube/client.crt
             cat config/client.key > ${HOME}/.minikube/profiles/minikube/client.key
             cat config/ca.crt > ${HOME}/.minikube/ca.crt
-
+      - run:
+          name: Get Pods or Deploy environment
+          command: |
+            kubeclt get pods
              
             
       
