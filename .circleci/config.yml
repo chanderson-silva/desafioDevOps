@@ -38,14 +38,14 @@ jobs:
     environment:
       IMAGE_NAME: chandaom41k3/api
       K8S_VERSION: v1.12.0
-      KUBECONFIG: /home/circleci/.kube/config
+      KUBECONFIG: ${HOME}/.kube/config
       MINIKUBE_VERSION: v0.31.0
       MINIKUBE_WANTUPDATENOTIFICATION: false
       MINIKUBE_WANTREPORTERRORPROMPT: false
       MINIKUBE_HOME: /home/circleci
       CHANGE_MINIKUBE_NONE_USER: true
       #GOPATH: /home/circleci/go
-    working_directory: /home/circleci
+    #working_directory: /home/circleci
     steps:
       - checkout
 #      - run:
