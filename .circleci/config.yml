@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Get Pods or Deploy environment
           command: |
-            kubeclt get pods
+            kubectl get pods
              
             
       
