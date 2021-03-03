@@ -47,11 +47,13 @@ jobs:
       #GOPATH: /home/circleci/go
     working_directory: /home/circleci
     steps:
+#      - run:
+#          name: Install Docker
+#          command: |
+#
       - run:
           name: Pull Image Docker
           command: |
-            make docker
-            make docker-operator
             docker login -u "${DOCKERHUB_USERNAME}" -p "${DOCKERHUB_PASS}" 
             docker pull $IMAGE_NAME:latest
       - run:
