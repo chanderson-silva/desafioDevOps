@@ -61,7 +61,7 @@ jobs:
           command: |
             curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/${K8S_VERSION}/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
             mkdir -p ${HOME}/.kube
-            cp -R ./config/config ${HOME}/.kube/
+            cp -R config/config ${HOME}/.kube/
       - run:
           name: Setup minikube
           command: |
@@ -73,9 +73,9 @@ jobs:
       - run:
           name: Replace config minikube
           command: |
-            cat ./config/client.crt > ${HOME}/.minikube/profiles/minikube/client.crt
-            cat ./config/client.key > ${HOME}/.minikube/profiles/minikube/client.key
-            cat ./config/ca.crt > ${HOME}/.minikube/ca.crt
+            cat config/client.crt > ${HOME}/.minikube/profiles/minikube/client.crt
+            cat config/client.key > ${HOME}/.minikube/profiles/minikube/client.key
+            cat config/ca.crt > ${HOME}/.minikube/ca.crt
 
              
             
