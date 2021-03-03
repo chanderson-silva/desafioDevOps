@@ -47,7 +47,6 @@ jobs:
       #GOPATH: /home/circleci/go
     working_directory: /home/circleci
     steps:
-      - checkout
       - run:
           name: Pull Image Docker
           command: |
